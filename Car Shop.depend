@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1654983225 source:c:\users\lenovo\desktop\c++ projects\car shop\main.cpp
+	<iostream>
+	<string>
+	<fstream>
+
