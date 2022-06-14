@@ -17,6 +17,7 @@ class car
         void edit_car();
         void display();
         void rem();
+        void customer_menu();
         void buy();
 
 };
@@ -173,7 +174,6 @@ void car :: rem()
         while (!data.eof())
         {
             data >> id >> manufacturer >> model >> price >> quantity;
-            //if (data.eof()) break;
             if (id == enid)
             {
                 cout << "Car was deleted" << endl;
@@ -190,6 +190,82 @@ void car :: rem()
 
     remove("database.txt");
     rename("database1.txt", "database.txt");
+}
+
+void car :: customer_menu()
+{
+    int pick;
+    cout << "WELCOME!!!" << endl;
+    m:
+
+    cout << "What would you like to do>" << endl;
+    cout << "1. see all the available cars" << endl;
+    cout << "2. Buy a car" << endl;
+    cout << "3. Exit" << endl;
+
+    cin >> pick;
+
+    switch (pick)
+    {
+    case 1:
+        display();
+        goto m;
+        break;
+    case 2:
+        buy();
+        break;
+    case 3:
+        exit(0);
+        break;
+    }
+}
+
+void car :: buy()
+{
+    fstream data, data1;
+
+    int enid;
+
+    cout << "Enter the id of a car that you want to buy : ", cin >> enid;
+
+    data.open("database.txt", ios :: in);
+
+    if (!data) cout << "No such file found" << endl;
+    else
+    {
+        data1.open("database1.txt", ios :: app | ios :: out);
+
+
+        while (!data.eof())
+        {
+            data >> id >> manufacturer >> model >> price >> quantity;
+            if (id == enid && quantity <= 0)
+            {
+                if (data.eof()) break;
+                cout << "Out of stock" << endl;
+                data1 << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
+
+            }
+            else if (id == enid && quantity > 0)
+            {
+                quantity--;
+                if (data.eof()) break;
+                cout << "You just bought a car!!!" << endl;
+                data1 << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
+            }
+            else
+            {
+                if (data.eof()) break;
+                data1 << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
+            }
+        }
+    }
+    data.close();
+    data1.close();
+
+    remove("database.txt");
+    rename("database1.txt", "database.txt");
+    customer_menu();
 }
 
 int main()
@@ -228,6 +304,7 @@ int main()
 
             break;
         case 2:
+            c.customer_menu();
             break;
         case 3:
             exit(0);

@@ -1,0 +1,2 @@
+1 Mercedes Sclass 120000 0
+2 Ferrari Enzo 2500000 0
