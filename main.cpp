@@ -28,56 +28,59 @@ void car :: admin_menu()
 
             while(start == 0)
             {
-            cout << "1. Add a new car" << endl;
-            cout << "2. Edit details of a car" << endl;
-            cout << "3. See all the cars" << endl;
-            cout << "4. Remove a car" << endl;
-            cout << "5. Log out" << endl;
+            cout << "\n\n\n\t\t\t\t\t\t 1. Add a new car" << endl;
+            cout << "\n\t\t\t\t\t\t 2. Edit details of a car" << endl;
+            cout << "\n\t\t\t\t\t\t 3. See all the cars" << endl;
+            cout << "\n\t\t\t\t\t\t 4. Remove a car" << endl;
+            cout << "\n\t\t\t\t\t\t 5. Log out" << endl;
 
-            cin >> pick;
+            cout << "\t\t\t\t\t\t ", cin >> pick;
 
                     switch (pick)
                 {
                     case 1:
+                        system("cls");
                         add_car();
                         break;
                     case 2:
+                        system("cls");
                         edit_car();
                         break;
                     case 3:
+                        system("cls");
                         display();
                         break;
                     case 4:
+                        system("cls");
                         rem();
                         break;
                     case 5:
+                        system("cls");
                         start = 1;
                         break;
                     default:
-                        cout << "Wrong input" << endl;
+                        cout << "\n\t\t\t\t\t\t Wrong input" << endl;
                         break;
                 }
-
     }
-            }
-
+}
 
 void car :: add_car()
 {
-
+    system("cls");
     fstream data;
     data.open("database.txt", ios::app | ios::out);
 
-    cout << "Enter id of the car : ", cin >> id;
-    cout << "Enter car manufacturer : ", cin >> manufacturer;
-    cout << "Enter car model : ", cin >> model;
-    cout << "Enter price if the car : ", cin >> price;
-    cout << "Enter the amount of cars you want to add : ", cin >> quantity;
+    cout << "\n\n\t\t\t\t\t\t Enter id of the car : ", cin >> id;
+    cout << "\n\t\t\t\t\t\t Enter car manufacturer : ", cin >> manufacturer;
+    cout << "\n\t\t\t\t\t\t Enter car model : ", cin >> model;
+    cout << "\n\t\t\t\t\t\t Enter price if the car : ", cin >> price;
+    cout << "\n\t\t\t\t\t\t Enter the amount of cars you want to add : ", cin >> quantity;
 
     data << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
 
     data.close();
-
+    system("cls");
 }
 
 void car :: edit_car()
@@ -87,20 +90,17 @@ void car :: edit_car()
     string man, mod;
     int pri, quan;
 
-    cout << "Here are all the cars" << endl;
+    cout << "\n\t\t\t\t\t\t Here are all the cars" << endl;
     display();
 
-    cout << "Enter the id of the car you want to edit : ", cin >> enid;
-
+    cout << "\n\t\t\t\t\t\t Enter the id of the car you want to edit : ", cin >> enid;
 
     data.open("database.txt", ios :: out| ios :: in);
 
-    if (!data) cout << "No such file found" << endl;
+    if (!data) cout << "\n\t\t\t\t\t\t No such file found" << endl;
     else
     {
         data1.open("database1.txt", ios :: app | ios :: out);
-
-        //data >> id >> manufacturer >> model >> price >> quantity;
 
         while (!data.eof())
         {
@@ -108,10 +108,10 @@ void car :: edit_car()
             if (data.eof()) break;
             if (enid == id)
             {
-                cout << "Enter the new manufacturer : ", cin >> man;
-                cout << "Enter the new model : ", cin >> mod;
-                cout << "Enter the new price : ", cin >> pri;
-                cout << "Enter the new amount of the cars : ", cin >> quan;
+                cout << "\n\n\t\t\t\t\t\t Enter the new manufacturer : ", cin >> man;
+                cout << "\n\t\t\t\t\t\t Enter the new model : ", cin >> mod;
+                cout << "\n\t\t\t\t\t\t Enter the new price : ", cin >> pri;
+                cout << "\n\t\t\t\t\t\t Enter the new amount of the cars : ", cin >> quan;
 
                 data1 << id << " " << man << " " << mod << " " << pri << " " << quan << "\n";
             }
@@ -119,17 +119,15 @@ void car :: edit_car()
             {
                 data1 << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
             }
-
         }
     }
-
-
 
     data.close();
     data1.close();
 
     remove("database.txt");
     rename("database1.txt", "database.txt");
+    system("cls");
 }
 
 void car :: display()
@@ -138,17 +136,15 @@ void car :: display()
 
     data.open("database.txt", ios::in);
 
-    if (!data) cout << "No such file found" << endl;
+    if (!data) cout << "\n\t\t\t\t\t\t No such file found" << endl;
     else
     {
-
         while (!data.eof())
         {
-
             data >> id >> manufacturer >> model >> price >> quantity;
             if (data.eof()) break;
-            cout << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
-
+            cout << "\t\t\t\t\t\t ---------------------------" << endl;
+            cout << "\t\t\t\t\t\t " << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
         }
     }
 
@@ -161,7 +157,7 @@ void car :: rem()
 
     int enid;
 
-    cout << "Enter the id of a car that you want to remove : ", cin >> enid;
+    cout << "\n\t\t\t\t\t\t Enter the id of a car that you want to remove : ", cin >> enid;
 
     data.open("database.txt", ios :: in);
 
@@ -170,13 +166,12 @@ void car :: rem()
     {
         data1.open("database1.txt", ios :: app | ios :: out);
 
-
         while (!data.eof())
         {
             data >> id >> manufacturer >> model >> price >> quantity;
             if (id == enid)
             {
-                cout << "Car was deleted" << endl;
+                cout << "\n\t\t\t\t\t\t Car was deleted" << endl;
             }
             else
             {
@@ -195,23 +190,25 @@ void car :: rem()
 void car :: customer_menu()
 {
     int pick;
-    cout << "WELCOME!!!" << endl;
+    cout << "\n\t\t\t\t\t\t\tWELCOME!!!\n\n" << endl;
     m:
 
-    cout << "What would you like to do>" << endl;
-    cout << "1. see all the available cars" << endl;
-    cout << "2. Buy a car" << endl;
-    cout << "3. Exit" << endl;
+    cout << "\n\n\t\t\t\t\t\t What would you like to do?" << endl;
+    cout << "\n\t\t\t\t\t\t 1. see all the available cars" << endl;
+    cout << "\n\t\t\t\t\t\t 2. Buy a car" << endl;
+    cout << "\n\t\t\t\t\t\t 3. Exit" << endl;
 
-    cin >> pick;
+    cout << "\n\t\t\t\t\t\t ", cin >> pick;
 
     switch (pick)
     {
     case 1:
+        system("cls");
         display();
         goto m;
         break;
     case 2:
+        system("cls");
         buy();
         break;
     case 3:
@@ -222,19 +219,19 @@ void car :: customer_menu()
 
 void car :: buy()
 {
+    display();
     fstream data, data1;
 
     int enid;
 
-    cout << "Enter the id of a car that you want to buy : ", cin >> enid;
+    cout << "\n\t\t\t\t\t\t Enter the id of a car that you want to buy : ", cin >> enid;
 
     data.open("database.txt", ios :: in);
 
-    if (!data) cout << "No such file found" << endl;
+    if (!data) cout << "\n\t\t\t\t\t\t No such file found" << endl;
     else
     {
         data1.open("database1.txt", ios :: app | ios :: out);
-
 
         while (!data.eof())
         {
@@ -242,7 +239,7 @@ void car :: buy()
             if (id == enid && quantity <= 0)
             {
                 if (data.eof()) break;
-                cout << "Out of stock" << endl;
+                cout << "\n\t\t\t\t\t\t Out of stock" << endl;
                 data1 << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
 
             }
@@ -250,7 +247,7 @@ void car :: buy()
             {
                 quantity--;
                 if (data.eof()) break;
-                cout << "You just bought a car!!!" << endl;
+                cout << "\n\t\t\t\t\t\t You just bought a car!!!" << endl;
                 data1 << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
             }
             else
@@ -270,6 +267,7 @@ void car :: buy()
 
 int main()
 {
+    system("color A");
     car c;
 
     string email = "aaa", email1;
@@ -277,42 +275,42 @@ int main()
     int start = 0;
     int pick;
 
-
-
     while (1)
     {
-        cout << "Who are you?" << endl;
-        cout << "1. Administrator" << endl;
-        cout << "2. Costomer" << endl;
-        cout << "3. Exit" << endl;
-
-        cin >> pick;
+        cout << "\n\n\t\t\t\t\t\t Who are you?" << endl;
+        cout << "\n\t\t\t\t\t\t 1. Administrator" << endl;
+        cout << "\n\t\t\t\t\t\t 2. Costomer" << endl;
+        cout << "\n\t\t\t\t\t\t 3. Exit" << endl;
+        cout << "\n\t\t\t\t\t\t ", cin >> pick;
 
         switch (pick)
         {
         case 1:
 
-            cout << "You need to log in. Please enter your " << endl;
-            cout << "Email: ", cin >> email1;
-            cout << "Password: ", cin >> password1;
+            cout << "\n\t\t\t\t\t\t You need to log in. Please enter your " << endl;
+            cout << "\n\t\t\t\t\t\t Email: ", cin >> email1;
+            cout << "\n\t\t\t\t\t\t Password: ", cin >> password1;
 
             if (email1 == email && password1 == password)
             {
+                system("cls");
                 c.admin_menu();
             }
-            else cout << "Error: failed to log in. Check your email and password" << endl;
+            else
+            {
+                system("cls");
+                cout << "\n\t\t\t\t\t\t Error: failed to log in. Check your email and password" << endl;
+            }
 
             break;
         case 2:
+            system("cls");
             c.customer_menu();
             break;
         case 3:
             exit(0);
             break;
         }
-
     }
-
-
     return 0;
 }
