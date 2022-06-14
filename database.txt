@@ -1,5 +1,0 @@
-1 Mercedes Sclass 120000 4
-2 Ferrari Enzo 1000000 1
-3 McLaren P1 1200000 1
-4 Bugatti Veyron 1000000 2
-5 Lamborgini Aventador 400000 1

@@ -16,6 +16,8 @@ class car
         void add_car();
         void edit_car();
         void display();
+        void rem();
+        void buy();
 
 };
 
@@ -28,7 +30,8 @@ void car :: admin_menu()
             cout << "1. Add a new car" << endl;
             cout << "2. Edit details of a car" << endl;
             cout << "3. See all the cars" << endl;
-            cout << "4. Log out" << endl;
+            cout << "4. Remove a car" << endl;
+            cout << "5. Log out" << endl;
 
             cin >> pick;
 
@@ -44,6 +47,9 @@ void car :: admin_menu()
                         display();
                         break;
                     case 4:
+                        rem();
+                        break;
+                    case 5:
                         start = 1;
                         break;
                     default:
@@ -146,6 +152,44 @@ void car :: display()
     }
 
     data.close();
+}
+
+void car :: rem()
+{
+    fstream data, data1;
+
+    int enid;
+
+    cout << "Enter the id of a car that you want to remove : ", cin >> enid;
+
+    data.open("database.txt", ios :: in);
+
+    if (!data) cout << "No such file found" << endl;
+    else
+    {
+        data1.open("database1.txt", ios :: app | ios :: out);
+
+
+        while (!data.eof())
+        {
+            data >> id >> manufacturer >> model >> price >> quantity;
+            //if (data.eof()) break;
+            if (id == enid)
+            {
+                cout << "Car was deleted" << endl;
+            }
+            else
+            {
+                if (data.eof()) break;
+                data1 << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
+            }
+        }
+    }
+    data.close();
+    data1.close();
+
+    remove("database.txt");
+    rename("database1.txt", "database.txt");
 }
 
 int main()
