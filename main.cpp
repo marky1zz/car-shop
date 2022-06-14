@@ -8,12 +8,14 @@ class car
 {
     private:
         string manufacturer, model;
-        float price;
-        int quantity;
+        long long int price;
+        int id, quantity;
 
     public:
         void admin_menu();
         void add_car();
+        void edit_car();
+        void display();
 
 };
 
@@ -36,8 +38,10 @@ void car :: admin_menu()
                         add_car();
                         break;
                     case 2:
+                        edit_car();
                         break;
                     case 3:
+                        display();
                         break;
                     case 4:
                         start = 1;
@@ -57,22 +61,99 @@ void car :: add_car()
     fstream data;
     data.open("database.txt", ios::app | ios::out);
 
-    cout << "enter price" << endl;
-    cin >> price;
-    cout << "added" << endl;
+    cout << "Enter id of the car : ", cin >> id;
+    cout << "Enter car manufacturer : ", cin >> manufacturer;
+    cout << "Enter car model : ", cin >> model;
+    cout << "Enter price if the car : ", cin >> price;
+    cout << "Enter the amount of cars you want to add : ", cin >> quantity;
+
+    data << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
 
     data.close();
 
-    cout << "OK" << endl;
+}
 
+void car :: edit_car()
+{
+    fstream data, data1;
+    int enid;
+    string man, mod;
+    int pri, quan;
+
+    cout << "Here are all the cars" << endl;
+    display();
+
+    cout << "Enter the id of the car you want to edit : ", cin >> enid;
+
+
+    data.open("database.txt", ios :: out| ios :: in);
+
+    if (!data) cout << "No such file found" << endl;
+    else
+    {
+        data1.open("database1.txt", ios :: app | ios :: out);
+
+        //data >> id >> manufacturer >> model >> price >> quantity;
+
+        while (!data.eof())
+        {
+            data >> id >> manufacturer >> model >> price >> quantity;
+            if (data.eof()) break;
+            if (enid == id)
+            {
+                cout << "Enter the new manufacturer : ", cin >> man;
+                cout << "Enter the new model : ", cin >> mod;
+                cout << "Enter the new price : ", cin >> pri;
+                cout << "Enter the new amount of the cars : ", cin >> quan;
+
+                data1 << id << " " << man << " " << mod << " " << pri << " " << quan << "\n";
+            }
+            else
+            {
+                data1 << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
+            }
+
+        }
+    }
+
+
+
+    data.close();
+    data1.close();
+
+    remove("database.txt");
+    rename("database1.txt", "database.txt");
+}
+
+void car :: display()
+{
+    fstream data;
+
+    data.open("database.txt", ios::in);
+
+    if (!data) cout << "No such file found" << endl;
+    else
+    {
+
+        while (!data.eof())
+        {
+
+            data >> id >> manufacturer >> model >> price >> quantity;
+            if (data.eof()) break;
+            cout << id << " " << manufacturer << " " << model << " " << price << " " << quantity << "\n";
+
+        }
+    }
+
+    data.close();
 }
 
 int main()
 {
     car c;
 
-    string email = "admin@gmail.com", email1;
-    string password = "12345", password1;
+    string email = "aaa", email1;
+    string password = "111", password1;
     int start = 0;
     int pick;
 
